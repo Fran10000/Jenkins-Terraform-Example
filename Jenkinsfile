@@ -3,6 +3,14 @@ pipeline {
     options {
         skipDefaultCheckout(true)
     }
+    tools
+    {
+        'org.jenkinsci.plugins.docker.commons.tools.DockerTool' 'Docker'
+        'terraform' 'terraform'
+    }
+    environment {
+    DOCKER_CERT_PATH = credentials('tarea4')
+    }
     stages {
         stage('clean workspace') {
             steps {
@@ -16,7 +24,7 @@ pipeline {
         }
     stage('tfsec') {
       steps {
-        sh ' /usr/local/bin/docker run --rm -v "$(pwd):/src" aquasec/tfsec .'
+        sh ' docker --version'
       }
     }
     stage('Approval for Terraform') {
@@ -27,7 +35,8 @@ pipeline {
 
         stage('terraform') {
             steps {
-                sh '/opt/homebrew/bin/terraform apply -auto-approve -no-color'
+              sh 'terraform init'
+              sh 'terraform apply -auto-approve -no-color'
             }
         }
     }
