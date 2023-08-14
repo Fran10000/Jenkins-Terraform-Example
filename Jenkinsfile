@@ -31,7 +31,6 @@ pipeline {
                     }
                 }
             }
-        }
         
     stage('Approval for Terraform') {
             steps {
