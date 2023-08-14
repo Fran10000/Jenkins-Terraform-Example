@@ -27,7 +27,7 @@ pipeline {
             image 'alpine'
             args '-v /var/run/docker.sock:/var/run/docker.sock'
         }
-    }
+    
     
     stage('tfsec') {
       steps {
@@ -35,6 +35,7 @@ pipeline {
               docker run --rm -v "/var/jenkins_home/workspace/Tarea_4:/src" aquasec/tfsec . '''
       }
     }
+        
     stage('Approval for Terraform') {
             steps {
                 input(message: 'Approval required before Terraform', ok: 'Proceed', submitterParameter: 'APPROVER')
