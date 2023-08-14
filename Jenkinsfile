@@ -3,10 +3,6 @@ pipeline {
     options {
         skipDefaultCheckout(true)
     }
-    docker {
-            image 'alpine'
-            args '-v /var/run/docker.sock:/var/run/docker.sock'
-    }
     tools
     {
         'org.jenkinsci.plugins.docker.commons.tools.DockerTool' 'Docker'
@@ -27,12 +23,15 @@ pipeline {
             }
         }
     
-    stage('tfsec') {
-      steps {
-            docker.image('aquasec/tfsec').inside('-v /var/jenkins_home/workspace/Tarea_4:/src') {
-            sh 'tfsec .'
-      }
-    }
+        stage('tfsec') {
+            steps {
+                script {
+                    docker.image('aquasec/tfsec').inside('-v /var/jenkins_home/workspace/Tarea_4:/src') {
+                        sh 'tfsec .'
+                    }
+                }
+            }
+        }
         
     stage('Approval for Terraform') {
             steps {
