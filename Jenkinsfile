@@ -25,7 +25,7 @@ pipeline {
     stage('tfsec') {
       steps {
         sh '''docker --version
-              docker run --rm -v "$(pwd):/src" aquasec/tfsec . '''
+              docker run --rm -v "/var/jenkins_home/workspace/Tarea_4:/src" aquasec/tfsec . '''
       }
     }
     stage('Approval for Terraform') {
