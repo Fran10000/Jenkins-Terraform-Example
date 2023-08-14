@@ -3,14 +3,14 @@ pipeline {
     options {
         skipDefaultCheckout(true)
     }
-    tools
-    {
-        'org.jenkinsci.plugins.docker.commons.tools.DockerTool' 'Default'
-        'terraform' 'Default'
-    }
-    environment {
-    DOCKER_CERT_PATH = credentials('tarea4')
-    }
+    // tools
+    // {
+    //     'org.jenkinsci.plugins.docker.commons.tools.DockerTool' 'Default'
+    //     'terraform' 'Default'
+    // }
+    // environment {
+    // DOCKER_CERT_PATH = credentials('tarea4')
+    // }
     stages {
         stage('clean workspace') {
             steps {
