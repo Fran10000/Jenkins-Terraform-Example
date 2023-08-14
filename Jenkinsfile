@@ -26,8 +26,8 @@ pipeline {
         stage('tfsec') {
             steps {
                 script {
-                    docker.image('aquasec/tfsec').inside('-v /var/jenkins_home/workspace/Tarea_4:/src') {
-                        sh 'tfsec .'
+                        docker.image('aquasec/tfsec').inside {
+                        sh "tfsec /src"  // Montar automáticamente el directorio actual en el contenedor
                     }
                 }
             }
