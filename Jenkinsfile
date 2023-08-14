@@ -26,8 +26,8 @@ pipeline {
         stage('tfsec') {
             steps {
                 script {
-                        docker.image('aquasec/tfsec').inside {
-                        sh "tfsec /src"  // Montar automáticamente el directorio actual en el contenedor
+                    sh 'docker pull aquasec/tfsec'
+                    sh 'docker run --rm -v "${WORKSPACE}:/src" aquasec/tfsec /src'
                     }
                 }
             }
