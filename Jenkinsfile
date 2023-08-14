@@ -3,6 +3,10 @@ pipeline {
     options {
         skipDefaultCheckout(true)
     }
+    docker {
+            image 'alpine'
+            args '-v /var/run/docker.sock:/var/run/docker.sock'
+    }
     tools
     {
         'org.jenkinsci.plugins.docker.commons.tools.DockerTool' 'Docker'
@@ -22,17 +26,11 @@ pipeline {
                 checkout scm
             }
         }
-
-    docker {
-            image 'alpine'
-            args '-v /var/run/docker.sock:/var/run/docker.sock'
-        }
-    
     
     stage('tfsec') {
       steps {
-        sh '''docker --version
-              docker run --rm -v "/var/jenkins_home/workspace/Tarea_4:/src" aquasec/tfsec . '''
+            docker.image('aquasec/tfsec').inside('-v /var/jenkins_home/workspace/Tarea_4:/src') {
+            sh 'tfsec .'
       }
     }
         
