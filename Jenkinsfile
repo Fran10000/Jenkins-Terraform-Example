@@ -22,6 +22,13 @@ pipeline {
                 checkout scm
             }
         }
+
+    docker {
+            image 'alpine'
+            args '-v /var/run/docker.sock:/var/run/docker.sock'
+        }
+    }
+    
     stage('tfsec') {
       steps {
         sh '''docker --version
